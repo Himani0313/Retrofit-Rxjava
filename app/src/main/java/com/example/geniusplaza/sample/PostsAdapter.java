@@ -2,6 +2,7 @@ package com.example.geniusplaza.sample;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         mPosts = posts;
 
     }
+    public Context getContext(){
+        return mContext;
+    }
 
     public void updateData(List<Posts> posts) {
         mPosts = posts;
@@ -47,16 +51,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.posts_contents_row, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        //ViewHolder vh = new ViewHolder(v);
+        return new ViewHolder(v);
     }
     //Replace contents of a view(invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         final Posts posts = mPosts.get(position);
+        Log.d("PostAdapter",posts.getId().toString() );
         holder.rowId.setText(posts.getId().toString());
+        Log.d("PostAdapter", "Bind success!");
         //holder.rowSong.setText(song.getSongName());
         //Glide.with(mContext).load(song.getArtistUrl()).into(holder.rowImage);
     }
@@ -66,12 +74,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     // Return the size of your dataset (invoked by the layout manager)
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout rowLayout  ;
-        TextView rowId;
+        //LinearLayout rowLayout;
+        public TextView rowId;
 
         public ViewHolder(View v) {
             super(v);
-            rowLayout = (LinearLayout) v.findViewById(R.id.row_layout);
+            //rowLayout = (LinearLayout) v.findViewById(R.id.row_layout);
             rowId = (TextView) v.findViewById(R.id.row_id);
         }
     }

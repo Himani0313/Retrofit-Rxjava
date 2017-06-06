@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Posts>> call, Response<List<Posts>> response) {
                 Log.d("Main Activity", "inside nRespose successful ");
-                mAdapter.updateData(mPosts);
+                mAdapter.updateData(response.body());
+                Log.d("aaaaaaaa",response.body().get(0).getId().toString());
                 Log.d("aaaaaaaa",response.body().get(0).getId().toString());
                 //put in listview
             }
