@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Posts {
 
+    //public static int post;
     @SerializedName("userId")
     @Expose
     private Integer userId;

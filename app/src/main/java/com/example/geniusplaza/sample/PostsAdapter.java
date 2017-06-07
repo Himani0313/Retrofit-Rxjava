@@ -1,17 +1,17 @@
 package com.example.geniusplaza.sample;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.geniusplaza.sample.POJO.Posts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,20 +51,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.posts_contents_row, parent, false);
-        //ViewHolder vh = new ViewHolder(v);
-        return new ViewHolder(v);
+        //Context context = parent.getContext();
+//
+//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.posts_contents_row, parent, false);
+//        //ViewHolder vh = new ViewHolder(v);
+//        return new ViewHolder(v, binding);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.posts_contents_row, parent, false);
+        return new ViewHolder(binding);
     }
     //Replace contents of a view(invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         final Posts posts = mPosts.get(position);
-        Log.d("PostAdapter",posts.getId().toString() );
-        holder.rowId.setText(posts.getId().toString());
-        Log.d("PostAdapter", "Bind success!");
+//        Log.d("PostAdapter",posts.getId().toString() );
+//        holder.rowId.setText(posts.getId().toString());
+//        Log.d("PostAdapter", "Bind success!");
+        holder.bind(posts);
         //holder.rowSong.setText(song.getSongName());
         //Glide.with(mContext).load(song.getArtistUrl()).into(holder.rowImage);
     }
@@ -75,12 +79,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //LinearLayout rowLayout;
-        public TextView rowId;
+        private final ViewDataBinding binding;
+        //public TextView rowId;
 
-        public ViewHolder(View v) {
-            super(v);
+        public ViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
             //rowLayout = (LinearLayout) v.findViewById(R.id.row_layout);
-            rowId = (TextView) v.findViewById(R.id.row_id);
+            //rowId = (TextView) v.findViewById(R.id.row_id);
+           //binding = DataBindingUtil.bind(post_contents_row);
+            this.binding = binding;
+        }
+        public void bind (Object obj){
+            binding.setVariable(BR.obj, obj);
+            binding.executePendingBindings();
         }
     }
 }
