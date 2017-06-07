@@ -15,10 +15,14 @@ import com.example.geniusplaza.sample.retrofit.RestClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Path;
+
 
 public class MainActivity extends AppCompatActivity {
     private ExampleApi mExampleApi;
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
-        mExampleApi.getAllPosts().enqueue(new Callback<List<Posts>>() {
+        /*mExampleApi.getAllPosts().enqueue(new Callback<List<Posts>>() {
 
 
             @Override
@@ -59,6 +63,30 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<Posts>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+
+        mExampleApi.getAllPosts().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.Observer<List<Posts>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Posts> value) {
+                        mAdapter.updateData(value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }
