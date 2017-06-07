@@ -90,7 +90,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             this.binding = binding;
         }
         public void bind (Object obj){
-            binding.setVariable(BR.obj, obj);
+            binding.setVariable(com.example.geniusplaza.sample.BR.obj, obj);
             binding.executePendingBindings();
         }
     }

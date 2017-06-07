@@ -7,14 +7,14 @@
 
 <LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:id="@+id/row_layout">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@{String.valueOf(obj.id)}"/>
+        android:text="@{String.valueOf(obj.id)}"/>
 
 </LinearLayout>
 </layout>
