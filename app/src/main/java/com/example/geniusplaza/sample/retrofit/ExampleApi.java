@@ -17,6 +17,7 @@ import retrofit2.http.Path;
  */
 
 public interface ExampleApi {
+
     @GET("/posts")
     Observable<List<Posts>> getAllPosts();
 
